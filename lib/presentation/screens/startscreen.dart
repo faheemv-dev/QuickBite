@@ -100,7 +100,7 @@ class _StartscreenState extends State<Startscreen> {
                     const SizedBox(height: 20),
 
                     const Text(
-                      "FLAVOR FINDER",
+                      "QuickBite",
                       style: TextStyle(
                         fontSize: 32,
                         fontWeight: FontWeight.bold,

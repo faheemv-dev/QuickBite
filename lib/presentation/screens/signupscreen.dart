@@ -28,7 +28,7 @@ class _SignupscreenState extends State<Signupscreen> {
       backgroundColor: const Color(0xFFFFF3E0),
       appBar: AppBar(
         backgroundColor: Colors.transparent,
-        elevation: 0,
+        elevation: 0, // Transperent shadow
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.black),
           onPressed: () => Navigator.pop(context),
@@ -41,7 +41,7 @@ class _SignupscreenState extends State<Signupscreen> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               const Text(
-                'Join Flavour Finder',
+                'Join QuickBite',
                 style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 12),
@@ -68,7 +68,7 @@ class _SignupscreenState extends State<Signupscreen> {
               ),
               const SizedBox(height: 20),
 
-              // Password Field
+              //Password Field
               TextField(
                 controller: _passwordcontroller,
                 obscureText: _obscurePassword,
@@ -126,7 +126,7 @@ class _SignupscreenState extends State<Signupscreen> {
                   ),
                 ),
               ),
-
+              
               const SizedBox(height: 10),
 
               // Terms and Conditions
@@ -169,24 +169,28 @@ class _SignupscreenState extends State<Signupscreen> {
                   ),
                 ],
               ),
+              const SizedBox(height: 5,),
+              Text("Or continue with :", style: TextStyle(
+                fontSize: 14,
+                color: Colors.black,
+              ),),
+
 
               const SizedBox(height: 25),
 
-              // Sign Up Button
+              //Sign Up Button
               _isLoading
                   ? const CircularProgressIndicator(color: Colors.orange)
                   : SizedBox(
                       width: 220,
                       height: 50,
                       child: Buttons(
-                        onPressed: _handleSignUp, // ✅ fixed here
+                        onPressed: _handleSignUp,
                         text: "Sign Up",
                       ),
                     ),
 
               const SizedBox(height: 10),
-
-              // Already have account
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -219,8 +223,6 @@ class _SignupscreenState extends State<Signupscreen> {
       ),
     );
   }
-
-  // ✅ Fixed and safe async signup method
   Future<void> _handleSignUp() async {
     if (!_isAgreed) {
       ScaffoldMessenger.of(context).showSnackBar(
