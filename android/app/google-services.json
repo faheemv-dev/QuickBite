@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "727803996675",
+    "project_id": "foood-d97f4",
+    "storage_bucket": "foood-d97f4.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:727803996675:android:b7f7d5e4c6e0df68163c36",
+        "android_client_info": {
+          "package_name": "com.example.fudddel"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC6NQURuJFOT9N6k_JS4P_kMAd8Q5SrYgY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
