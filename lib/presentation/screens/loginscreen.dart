@@ -132,25 +132,6 @@ class _LoginscreenState extends State<Loginscreen> {
               _buildEmailField(),
               const SizedBox(height: 20),
               _buildPasswordField(),
-              const SizedBox(height: 20),
-
-              const Text(
-                "Or continue with :",
-                style: TextStyle(fontSize: 14, color: Colors.black),
-              ),
-              const SizedBox(height: 10),
-
-              // Google Login Button
-              Buttons(
-                onPressed:_handleGoogleSignIn,
-                text: "Sign in with Google",
-                icon: SizedBox(
-                  height: 24,
-                  width: 24,
-                  child: Image.asset('assets/images/Google.jpg'),
-                ),
-              ),
-
               const SizedBox(height: 25),
 
               // Login Button

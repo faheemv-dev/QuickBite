@@ -20,7 +20,8 @@ class _SignupscreenState extends State<Signupscreen> {
 
   final TextEditingController _emailcontroller = TextEditingController();
   final TextEditingController _passwordcontroller = TextEditingController();
-  final TextEditingController _confirmpasswordcontroller = TextEditingController();
+  final TextEditingController _confirmpasswordcontroller =
+      TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -62,7 +63,6 @@ class _SignupscreenState extends State<Signupscreen> {
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(12),
                     borderSide: BorderSide.none,
-
                   ),
                 ),
               ),
@@ -109,7 +109,7 @@ class _SignupscreenState extends State<Signupscreen> {
                   prefixIcon: const Icon(Icons.lock, color: Colors.orange),
                   suffixIcon: IconButton(
                     icon: Icon(
-                      _obscureConfirmPassword 
+                      _obscureConfirmPassword
                           ? Icons.visibility_off
                           : Icons.visibility,
                       color: Colors.grey,
@@ -126,7 +126,7 @@ class _SignupscreenState extends State<Signupscreen> {
                   ),
                 ),
               ),
-              
+
               const SizedBox(height: 10),
 
               // Terms and Conditions
@@ -169,12 +169,11 @@ class _SignupscreenState extends State<Signupscreen> {
                   ),
                 ],
               ),
-              const SizedBox(height: 5,),
-              Text("Or continue with :", style: TextStyle(
-                fontSize: 14,
-                color: Colors.black,
-              ),),
-
+              const SizedBox(height: 5),
+              Text(
+                "Or continue with :",
+                style: TextStyle(fontSize: 14, color: Colors.black),
+              ),
 
               const SizedBox(height: 25),
 
@@ -182,13 +181,10 @@ class _SignupscreenState extends State<Signupscreen> {
               _isLoading
                   ? const CircularProgressIndicator(color: Colors.orange)
                   : SizedBox(
-                      width: 220,
-                      height: 50,
-                      child: Buttons(
-                        onPressed: _handleSignUp,
-                        text: "Sign Up",
-                      ),
-                    ),
+                    width: 220,
+                    height: 50,
+                    child: Buttons(onPressed: _handleSignUp, text: "Sign Up"),
+                  ),
 
               const SizedBox(height: 10),
               Row(
@@ -217,12 +213,40 @@ class _SignupscreenState extends State<Signupscreen> {
                   ),
                 ],
               ),
+              const SizedBox(height: 25),
+
+              // Google Circle Button
+              GestureDetector(
+                onTap: _handleGoogleSign,
+                child: Container(
+                  width: 55,
+                  height: 55,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    shape: BoxShape.circle,
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.1),
+                        blurRadius: 5,
+                        offset: const Offset(0, 3),
+                      ),
+                    ],
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(12.0),
+                    child: Image.asset(
+                      'assets/Google.jpg',
+                    ), // Add your Google logo here
+                  ),
+                ),
+              ),
             ],
           ),
         ),
       ),
     );
   }
+
   Future<void> _handleSignUp() async {
     if (!_isAgreed) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -234,9 +258,9 @@ class _SignupscreenState extends State<Signupscreen> {
     }
 
     if (_passwordcontroller.text != _confirmpasswordcontroller.text) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Passwords do not match')),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(const SnackBar(content: Text('Passwords do not match')));
       return;
     }
 
@@ -263,6 +287,34 @@ class _SignupscreenState extends State<Signupscreen> {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text(result ?? "Something went wrong!")),
       );
+    }
+  }
+
+  Future<void> _handleGoogleSign() async {
+    setState(() => _isLoading = true);
+
+    final result = await AuthService().signInWithGoogle();
+
+    setState(() => _isLoading = false);
+
+    if (!mounted) return;
+
+    if (result == 'success') {
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(const SnackBar(content: Text('Signed in with Google!')));
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => const Homescreen()),
+      );
+    } else if (result == 'cancelled') {
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(const SnackBar(content: Text('Google sign-in cancelled')));
+    } else {
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text("Something went wrong!")));
     }
   }
 }
