@@ -29,7 +29,7 @@ class _SignupscreenState extends State<Signupscreen> {
       backgroundColor: const Color(0xFFFFF3E0),
       appBar: AppBar(
         backgroundColor: Colors.transparent,
-        elevation: 0, // Transperent shadow
+        elevation: 0,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.black),
           onPressed: () => Navigator.pop(context),
@@ -52,7 +52,7 @@ class _SignupscreenState extends State<Signupscreen> {
               ),
               const SizedBox(height: 25),
 
-              //Email Field
+            
               TextField(
                 controller: _emailcontroller,
                 decoration: InputDecoration(
@@ -68,7 +68,7 @@ class _SignupscreenState extends State<Signupscreen> {
               ),
               const SizedBox(height: 20),
 
-              //Password Field
+             
               TextField(
                 controller: _passwordcontroller,
                 obscureText: _obscurePassword,
@@ -97,8 +97,6 @@ class _SignupscreenState extends State<Signupscreen> {
                 ),
               ),
               const SizedBox(height: 20),
-
-              // Confirm Password Field
               TextField(
                 controller: _confirmpasswordcontroller,
                 obscureText: _obscureConfirmPassword,
@@ -129,7 +127,6 @@ class _SignupscreenState extends State<Signupscreen> {
 
               const SizedBox(height: 10),
 
-              // Terms and Conditions
               Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
@@ -137,7 +134,7 @@ class _SignupscreenState extends State<Signupscreen> {
                     value: _isAgreed,
                     onChanged: (val) {
                       setState(() {
-                        _isAgreed = val ?? false; // check box empty
+                        _isAgreed = val ?? false;
                       });
                     },
                     activeColor: Colors.orange,
@@ -176,8 +173,6 @@ class _SignupscreenState extends State<Signupscreen> {
               ),
 
               const SizedBox(height: 25),
-
-              //Sign Up Button
               _isLoading
                   ? const CircularProgressIndicator(color: Colors.orange)
                   : SizedBox(
@@ -215,7 +210,6 @@ class _SignupscreenState extends State<Signupscreen> {
               ),
               const SizedBox(height: 25),
 
-              // Google Circle Button
               GestureDetector(
                 onTap: _handleGoogleSign,
                 child: Container(
@@ -235,8 +229,8 @@ class _SignupscreenState extends State<Signupscreen> {
                   child: Padding(
                     padding: const EdgeInsets.all(12.0),
                     child: Image.asset(
-                      'assets/Google.jpg',
-                    ), // Add your Google logo here
+                      'assets/images/google1.jpg',
+                    ),
                   ),
                 ),
               ),
@@ -291,30 +285,30 @@ class _SignupscreenState extends State<Signupscreen> {
   }
 
   Future<void> _handleGoogleSign() async {
-    setState(() => _isLoading = true);
+  setState(() => _isLoading = true);
+  try {
+    final user = await AuthService().signInWithGoogle();
 
-    final result = await AuthService().signInWithGoogle();
-
-    setState(() => _isLoading = false);
-
-    if (!mounted) return;
-
-    if (result == 'success') {
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(const SnackBar(content: Text('Signed in with Google!')));
+    if (user != null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Signed in with Google!')),
+      );
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => const Homescreen()),
       );
-    } else if (result == 'cancelled') {
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(const SnackBar(content: Text('Google sign-in cancelled')));
     } else {
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(SnackBar(content: Text("Something went wrong!")));
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Google sign-in cancelled')),
+      );
     }
+  } catch (e) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text('Google sign-in failed: $e')),
+    );
+  } finally {
+    if (mounted) setState(() => _isLoading = false);
   }
+}
+
 }

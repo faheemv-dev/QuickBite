@@ -19,7 +19,6 @@ class _LoginscreenState extends State<Loginscreen> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
-  // --- Email/Password login ---
   Future<void> _handleLogin() async {
     setState(() => _isLoading = true);
     final result = await AuthService().signInWithEmail(
@@ -44,7 +43,7 @@ class _LoginscreenState extends State<Loginscreen> {
     }
   }
 
-  // --- Google login ---
+  
   Future<void> _handleGoogleSignIn() async {
     setState(() => _isLoading = true);
     final result = await AuthService().signInWithGoogle();
@@ -66,7 +65,6 @@ class _LoginscreenState extends State<Loginscreen> {
     }
   }
 
-  // --- Field Builders ---
   Widget _buildEmailField() => TextField(
         controller: _emailController,
         keyboardType: TextInputType.emailAddress,
@@ -134,7 +132,7 @@ class _LoginscreenState extends State<Loginscreen> {
               _buildPasswordField(),
               const SizedBox(height: 25),
 
-              // Login Button
+            
               SizedBox(
                       width: 220,
                       height: 50,
@@ -146,7 +144,7 @@ class _LoginscreenState extends State<Loginscreen> {
 
               const SizedBox(height: 10),
 
-              // Signup redirect
+       
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [

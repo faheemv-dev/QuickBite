@@ -5,18 +5,16 @@ class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final GoogleSignIn _googleSignIn = GoogleSignIn();
 
-  //Sign Up with Email & Password
   Future<String?> signUpWithEmail(String email, String password) async {
     try {
       await _auth.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
-      return null; //If successful, return null
+      return 'Registration successful';
     } on FirebaseAuthException catch (e) {
-      //Return readable error message
       switch (e.code) {
-        case 'email-already-in-use': //firebase error code
+        case 'email-already-in-use':
           return 'This email is already registered.';
         case 'invalid-email':
           return 'The email address is invalid.';
@@ -26,19 +24,17 @@ class AuthService {
           return e.message ?? 'An unknown error occurred.';
       }
     } catch (e) {
-      //Catch unexpected errors
       return 'Something went wrong. Please try again.';
     }
   }
 
-  //Log In with Email & Password
   Future<String?> signInWithEmail(String email, String password) async {
     try {
       await _auth.signInWithEmailAndPassword(
         email: email,
         password: password,
       );
-      return null; //Success
+      return 'success';
     } on FirebaseAuthException catch (e) {
       switch (e.code) {
         case 'user-not-found':
@@ -54,24 +50,20 @@ class AuthService {
       return 'Something went wrong. Please try again.';
     }
   }
-  //google sign in
+
   Future<User?> signInWithGoogle() async {
-    // Implementation for Google Sign-In
     try {
-      // Step 1: Trigger Google Sign-In dialog
       final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
-      if (googleUser == null) return null; // User canceled login
+      if (googleUser == null) return null; 
 
-      // Step 2: Get auth details from the request
-      final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
+      final GoogleSignInAuthentication googleAuth =
+          await googleUser.authentication;
 
-      // Step 3: Create a new credential
       final credential = GoogleAuthProvider.credential(
         accessToken: googleAuth.accessToken,
         idToken: googleAuth.idToken,
       );
 
-      // Step 4: Sign in with Firebase
       final result = await _auth.signInWithCredential(credential);
       return result.user;
     } catch (e) {
@@ -79,12 +71,11 @@ class AuthService {
     }
   }
 
-  //Sign Out
+
   Future<void> signOut() async {
     await _auth.signOut();
     await _googleSignIn.signOut();
   }
 
-  //Check Current User
   User? get currentUser => _auth.currentUser;
 }
