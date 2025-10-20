@@ -3,8 +3,7 @@ import 'package:flutter/material.dart';
 class Buttons extends StatelessWidget {
   final String text;
   final VoidCallback onPressed;
-  final Widget? icon; // optional widget for icon (Icon or Image)
-
+  final Widget? icon; 
   const Buttons({
     super.key,
     required this.text,
@@ -30,7 +29,7 @@ class Buttons extends StatelessWidget {
                 ? Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    icon!, // your passed widget (Icon or Image)
+                    icon!, 
                     const SizedBox(width: 10),
                     Text(
                       text,
