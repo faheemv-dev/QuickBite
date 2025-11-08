@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:fudddel/presentation/screens/loginscreen.dart';
 import 'package:fudddel/presentation/screens/signupscreen.dart';
 import 'package:fudddel/presentation/widgets/buttons.dart';
-import 'package:fudddel/presentation/widgets/detector.dart';
 
 class Startscreen extends StatefulWidget {
   const Startscreen({super.key});
@@ -146,7 +145,7 @@ class _StartscreenState extends State<Startscreen> {
                             color: Colors.white.withOpacity(0.9),
                           ),
                         ),
-                        CustDetector(
+                        GestureDetector(
                           onTap: () {
                             Navigator.push(
                               context,

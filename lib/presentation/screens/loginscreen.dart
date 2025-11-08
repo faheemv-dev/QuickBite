@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:fudddel/presentation/screens/homescreen.dart';
 import 'package:fudddel/presentation/screens/signupscreen.dart';
 import 'package:fudddel/presentation/widgets/buttons.dart';
-import 'package:fudddel/presentation/widgets/detector.dart';
 import 'package:fudddel/services/auth.dart';
 
 class Loginscreen extends StatefulWidget {
@@ -14,20 +13,17 @@ class Loginscreen extends StatefulWidget {
 
 class _LoginscreenState extends State<Loginscreen> {
   bool _obscurePassword = true;
-  bool _isLoading = false;
+
 
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
   Future<void> _handleLogin() async {
-    setState(() => _isLoading = true);
     final result = await AuthService().signInWithEmail(
       _emailController.text.trim(),
       _passwordController.text.trim(),
     );
     if (!mounted) return;
-    setState(() => _isLoading = false);
-
     if (result == 'success') {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Logged in successfully!')),
@@ -44,11 +40,9 @@ class _LoginscreenState extends State<Loginscreen> {
   }
 
   
-  Future<void> _handleGoogleSignIn() async {
-    setState(() => _isLoading = true);
+  Future<void> signInWithGoogle() async {
     final result = await AuthService().signInWithGoogle();
     if (!mounted) return;
-    setState(() => _isLoading = false);
 
     if (result == 'success') {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -152,7 +146,7 @@ class _LoginscreenState extends State<Loginscreen> {
                     "Don't have an account? ",
                     style: TextStyle(fontSize: 14, color: Colors.black),
                   ),
-                  CustDetector(
+                  GestureDetector(
                     onTap: () => Navigator.push(
                       context,
                       MaterialPageRoute(builder: (_) => const Signupscreen()),

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fudddel/presentation/screens/homescreen.dart';
 import 'package:fudddel/presentation/screens/loginscreen.dart';
 import 'package:fudddel/presentation/widgets/buttons.dart';
-import 'package:fudddel/presentation/widgets/detector.dart';
+
 import 'package:fudddel/services/auth.dart';
 
 class Signupscreen extends StatefulWidget {
@@ -18,15 +18,15 @@ class _SignupscreenState extends State<Signupscreen> {
   bool _obscureConfirmPassword = true;
   bool _isLoading = false;
 
-  final TextEditingController _emailcontroller = TextEditingController();
+  final TextEditingController _emailcontroller = TextEditingController(); //for reading email input
   final TextEditingController _passwordcontroller = TextEditingController();
   final TextEditingController _confirmpasswordcontroller =
-      TextEditingController();
+TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFFFF3E0),
+      backgroundColor: const Color(0xFFFFF3E0), 
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
@@ -192,7 +192,7 @@ class _SignupscreenState extends State<Signupscreen> {
                       color: Colors.black.withOpacity(0.9),
                     ),
                   ),
-                  CustDetector(
+                  GestureDetector(
                     onTap: () {
                       Navigator.push(
                         context,
